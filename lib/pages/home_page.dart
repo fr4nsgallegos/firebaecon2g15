@@ -119,6 +119,30 @@ class HomePage extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
+                UserModel newUser = UserModel(
+                  name: "Melisa Losa",
+                  email: "Meli@gmail.com",
+                  age: 35,
+                  gender: "F",
+                  createdAt: DateTime.now(),
+                );
+                userReference
+                    .doc("uid0010")
+                    // .set({"nacionality": "Peruana"}) //chanca la info si encuentra el id
+                    .set(newUser.toMap())
+                    .then((value) {
+                      print("Usuario agregado con el id específico");
+                    })
+                    .catchError((error) {
+                      print("Error al agregar el usuario: $error");
+                    });
+                ;
+              },
+              child: Text("Agregando usuario con id específico"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
                 userReference
                     .doc("user002")
                     .update({"email": "peruana@gfmaol.com"})
@@ -130,6 +154,22 @@ class HomePage extends StatelessWidget {
                     });
               },
               child: Text("Actualizar un usuario"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                userReference
+                    .doc("GlvfVZcPuD3eZZ7rK6OL")
+                    .delete()
+                    .then((value) {
+                      print("Usuario eliminado correctamente");
+                    })
+                    .catchError((error) {
+                      print("Error al agregar el usuario: $error");
+                    });
+                ;
+              },
+              child: Text("Eliminar un usuario"),
             ),
           ],
         ),
