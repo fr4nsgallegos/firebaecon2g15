@@ -51,8 +51,8 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 userReference
-                    .where("age", isLessThan: 45)
-                    .where("gender", isEqualTo: "F")
+                    .where("age", isLessThan: 24)
+                    .where("gender", isEqualTo: "M")
                     .get()
                     .then((value) {
                       List<QueryDocumentSnapshot> docs = value.docs;
@@ -73,6 +73,63 @@ class HomePage extends StatelessWidget {
                     });
               },
               child: Text("Obtener información filtrada"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // AGREGAR UN USUARIO DESDE UN MAP
+                // userReference
+                //     .add({
+                //       "name": "Lucas",
+                //       "email": "luqui@gmail.com",
+                //       "gender": "M",
+                //       "age": 22,
+                //       "createdAt": Timestamp.now(),
+                //     })
+                //     .then((value) {
+                //       print("Usuario agregado correcamente");
+                //       print(value);
+                //       print(value.id);
+                //     })
+                //     .catchError((error) {
+                //       print("Error al agregar el usuario: $error");
+                //     });
+
+                // AGREGAR USUARIO DESDE UN USERMODEL
+                UserModel newUser = UserModel(
+                  name: "Carlos",
+                  email: "cARLITOS@gmail.com",
+                  age: 15,
+                  gender: "M",
+                  createdAt: DateTime.now(),
+                );
+
+                userReference
+                    .add(newUser.toMap())
+                    .then((value) {
+                      print("Usuario agregado correcamente");
+                      print(value);
+                      print(value.id);
+                    })
+                    .catchError((error) {
+                      print("Error al agregar el usuario: $error");
+                    });
+              },
+              child: Text("Agregar un usuario"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                userReference
+                    .doc("user002")
+                    .update({"email": "peruana@gfmaol.com"})
+                    .then((value) {
+                      print("Usuario actualizado correctamente");
+                    })
+                    .catchError((error) {
+                      print("Error al agregar el usuario: $error");
+                    });
+              },
+              child: Text("Actualizar un usuario"),
             ),
           ],
         ),
