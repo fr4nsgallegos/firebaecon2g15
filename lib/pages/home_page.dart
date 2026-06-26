@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebaseconn2g15/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,8 +22,20 @@ class HomePage extends StatelessWidget {
                 // Consulta de todos los documentos
                 await userReference.get().then((value) {
                   List<QueryDocumentSnapshot> docs = value.docs;
-                  docs.forEach((user) {
-                    print(user.data());
+                  // docs.forEach((user) {
+                  //   print(user.data());
+                  // });
+                  List<UserModel> userModelList = docs.map((doc) {
+                    return UserModel.fromMap(
+                      doc.data() as Map<String, dynamic>,
+                    );
+                  }).toList();
+
+                  userModelList.forEach((userModel) {
+                    print("*****************");
+                    print(userModel.name);
+                    print(userModel.createdAt);
+                    print(userModel.email);
                   });
                 });
 
@@ -34,6 +47,32 @@ class HomePage extends StatelessWidget {
                 });
               },
               child: Text("Get data"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                userReference
+                    .where("age", isLessThan: 45)
+                    .where("gender", isEqualTo: "F")
+                    .get()
+                    .then((value) {
+                      List<QueryDocumentSnapshot> docs = value.docs;
+                      List<UserModel> userModelList = docs.map((element) {
+                        return UserModel.fromMap(
+                          element.data() as Map<String, dynamic>,
+                        );
+                      }).toList();
+
+                      userModelList.forEach((usuario) {
+                        print("******************");
+                        print(usuario.name);
+                        print(usuario.email);
+                        print(usuario.age);
+                        print(usuario.gender);
+                        print(usuario.createdAt);
+                      });
+                    });
+              },
+              child: Text("Obtener información filtrada"),
             ),
           ],
         ),
