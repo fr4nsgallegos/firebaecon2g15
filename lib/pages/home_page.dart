@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseconn2g15/models/user_model.dart';
-import 'package:firebaseconn2g15/pages/temporizador_stream_page.dart';
+import 'package:firebaseconn2g15/pages/streams/stream_firestore_page.dart';
+import 'package:firebaseconn2g15/pages/streams/temporizador_stream_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -177,11 +178,11 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TemporizadorStreamPage(),
+                    builder: (context) => StreamFirestorePage(),
                   ),
                 );
               },
-              child: Text("Temporizador Stream Page"),
+              child: Text("Streams Page"),
             ),
           ],
         ),
