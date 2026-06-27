@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseconn2g15/models/user_model.dart';
 import 'package:firebaseconn2g15/pages/streams/contador_stream_controller_page.dart';
+import 'package:firebaseconn2g15/pages/streams/multiple_stream_controller.dart';
 import 'package:firebaseconn2g15/pages/streams/temporizador_stream_page.dart';
 import 'package:flutter/material.dart';
 
@@ -192,6 +193,17 @@ class StreamFirestorePage extends StatelessWidget {
                       );
                     },
                     child: Text("Temporizador Stream Page"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MultipleStreamController(),
+                        ),
+                      );
+                    },
+                    child: Text("Múltiples StreamController"),
                   ),
                 ],
               ),
