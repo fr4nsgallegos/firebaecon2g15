@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseconn2g15/models/user_model.dart';
+import 'package:firebaseconn2g15/pages/streams/contador_stream_controller_page.dart';
+import 'package:firebaseconn2g15/pages/streams/temporizador_stream_page.dart';
 import 'package:flutter/material.dart';
 
 // Errores comunes al usar StreamBuider
@@ -63,6 +65,7 @@ class StreamFirestorePage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
+              flex: 6,
               child: StreamBuilder(
                 //esta manera trae la info en forma de Map, por lo que hay que hacer un fromMap para traducirlo a un UserModel
                 // stream: userReference.snapshots(),
@@ -142,23 +145,55 @@ class StreamFirestorePage extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: StreamBuilder(
-                stream: watchSettings(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  final data = snapshot.data!.data();
-                  if (data == null) return Text("No existe el documento");
+              child: Center(
+                child: StreamBuilder(
+                  stream: watchSettings(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    final data = snapshot.data!.data();
+                    if (data == null) return Text("No existe el documento");
 
-                  final enMatenimiento =
-                      (data["enMantenimiento"] ?? false) as bool;
+                    final enMatenimiento =
+                        (data["enMantenimiento"] ?? false) as bool;
 
-                  return Text(
-                    "Modo de mantenimiento: $enMatenimiento",
-                    style: TextStyle(fontSize: 25),
-                  );
-                },
+                    return Text(
+                      "Modo de mantenimiento: $enMatenimiento",
+                      style: TextStyle(fontSize: 25),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContadorStreamControllerPage(),
+                        ),
+                      );
+                    },
+                    child: Text("Contador Stream Page"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TemporizadorStreamPage(),
+                        ),
+                      );
+                    },
+                    child: Text("Temporizador Stream Page"),
+                  ),
+                ],
               ),
             ),
           ],
