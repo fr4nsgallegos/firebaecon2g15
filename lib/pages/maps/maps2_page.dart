@@ -25,7 +25,7 @@ class _Maps2PageState extends State<Maps2Page> {
           _mapController.onMapCreated(controller);
         },
         initialCameraPosition: CameraPosition(
-          target: LatLng(-23.58960385759944, -70.3907454921793),
+          target: LatLng(-12.063808950914853, -77.07579660655514),
           zoom: 18,
         ),
       ),
