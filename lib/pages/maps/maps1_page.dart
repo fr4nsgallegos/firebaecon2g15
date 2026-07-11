@@ -23,8 +23,17 @@ class _Maps1PageState extends State<Maps1Page> {
       "assets/markers/orange.png",
     );
 
-    // markers.add(Marker(markerId: MarkerId(markers.length.toString()),position:
-    // LatLng(latitude, longitude)));
+    markers.add(
+      Marker(
+        markerId: MarkerId(markers.length.toString()),
+        position: LatLng(currenPosition!.latitude, currenPosition!.longitude),
+        icon: _customMarker!,
+        infoWindow: InfoWindow(
+          title: "Mi posición actual",
+          snippet: "Ubicación en timepo real ",
+        ),
+      ),
+    );
   }
 
   Future<void> getPosition() async {
@@ -53,11 +62,12 @@ class _Maps1PageState extends State<Maps1Page> {
     try {
       Position position = await Geolocator.getCurrentPosition();
       currenPosition = position;
-      Marker myPositionMaker = Marker(
-        markerId: MarkerId("Mypos"),
-        position: LatLng(currenPosition!.latitude, currenPosition!.longitude),
-      );
-      markers.add(myPositionMaker);
+      // Marker myPositionMaker = Marker(
+      //   markerId: MarkerId("Mypos"),
+      //   position: LatLng(currenPosition!.latitude, currenPosition!.longitude),
+      // );
+      // markers.add(myPositionMaker);
+      setCustomMarker();
       setState(() {});
     } catch (e) {
       print("error: $e");
