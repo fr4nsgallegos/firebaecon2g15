@@ -45,8 +45,46 @@ class _Maps2PageState extends State<Maps2Page> {
             _customInfoWindowController.addInfoWindow!(
               Container(
                 width: 250,
-                height: 250,
-                decoration: BoxDecoration(color: Colors.red),
+                height: 160,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadiusGeometry.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+
+                      child: Image.network(
+                        place.urlImage,
+                        width: 250,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsGeometry.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            place.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(place.services, style: TextStyle(fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               place.position,
             );
@@ -78,16 +116,19 @@ class _Maps2PageState extends State<Maps2Page> {
             },
             initialCameraPosition: CameraPosition(
               target: LatLng(-12.063808950914853, -77.07579660655514),
-              zoom: 16,
+              zoom: 16.5,
             ),
             onTap: (LatLng position) {
               _customInfoWindowController.hideInfoWindow!();
+            },
+            onCameraMove: (position) {
+              _customInfoWindowController.onCameraMove!();
             },
             markers: markers,
           ),
           CustomInfoWindow(
             controller: _customInfoWindowController,
-            height: 250,
+            height: 200,
             width: 250,
             offset: 50,
           ),
